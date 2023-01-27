@@ -31,23 +31,23 @@ public class PizzaController {
     //Returns view 1 - custdetails
     @PostMapping(path="/pizza")
     public String showViewOne(@Valid Order order, BindingResult result, Model model) {
-        // if(result.hasErrors()){
-        //     return "index";
-        // }
-        model.addAttribute("order", order);
+        if(result.hasErrors()){
+            return "index";
+        }
+        model.addAttribute("order", new Order());
         return "custdetails";
     }
 
     //Method to process customerdetails form and perform validation
     //Returns view 2 - orderdetails
     @PostMapping(path="/pizza/order")
-    public String showViewOne(@Valid Order order, BindingResult result, @ModelAttribute Order o, Model model, HttpServletResponse response) throws IOException {
-        // if (result.hasErrors()){
-        //     return "custdetails";
-        // }
-        calculateCost(model, o.getPizza(), o.getSize(), o.getQuantity());
-        //model.addAttribute( "order", order);
+    public String showViewTwo(@Valid Order order, BindingResult result, @ModelAttribute Order o, Model model, HttpServletResponse response) throws IOException {
+        if (result.hasErrors()){
+            return "custdetails";
+        }
         response.setStatus(HttpServletResponse.SC_CREATED);
+        calculateCost(model, o.getPizza(), o.getSize(), o.getQuantity());
+        model.addAttribute("order", order);
         return "orderdetails";
     }
 
@@ -84,6 +84,7 @@ public class PizzaController {
         double total = pizzaPrice * sizeMulti * quantity;
         System.out.println("Total price is $" + total);
         model.addAttribute("total", total);
+
     }
 
 }

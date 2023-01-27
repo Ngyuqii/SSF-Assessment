@@ -13,14 +13,14 @@
 
     <p>Your order will be delivered to <span data-th-text="*{address}"></span>.</p>
         
-    <p>Pizza cost:</p>
+    <p>Pizza cost: $<span data-th-text="${total}"></span></p>
 
-    <!-- <p><span data-th-if="*{rush}">
+    <p><span data-th-if="*{rush}">
         Rush: $2 <br><br>
-        Total Cost: $<span data-th-if="${total}+2"></span></p>
+        Total Cost: $<span data-th-text="${total}+2"></span></p>
 
     <p><span data-th-unless="*{rush}">
-        Total Cost: $<span data-th-if="${total}"></span></p> -->
+        Total Cost: $<span data-th-text="${total}"></span></p>
     
     <p> Comments:<span data-th-text="*{comments}"></span>
     </p>
