@@ -1,8 +1,14 @@
 package ssf.assessment.model;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Random;
 
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -123,5 +129,35 @@ public class Order implements Serializable {
         //Reduce string to number of required characters
         return sb.toString().substring(0, numOfChars);
     }
-    
+
+    //Builder Method
+    public JsonObject toJSON() {
+        return Json.createObjectBuilder()
+                .add("orderID", this.getOrderId())
+                .add("name", this.getName())
+                .add("address", this.getAddress())
+                .add("phone", this.getPhone())
+                .add("rush", this.isRush())
+                .add("comments", this.getComments())
+                .add("pizza", this.getPizza())
+                .add("size", this.getSize())
+                .add("quantity", this.getQuantity())
+                .add("total", this.getTotal())
+                .build();
+    }
+
+    //Marshalling and Unmarshalling from string
+    //1. Create an Input Stream "is" from String
+    //2. Create a Reader "r" from the Input Stream
+    //3. Parse the string to JsonObject
+    public static Order createJson(String json) throws IOException {
+        Order pizzaOrder = new Order();
+        try (InputStream is = new ByteArrayInputStream(json.getBytes())) {
+            JsonReader r = Json.createReader(is);
+            JsonObject o = r.readObject();
+
+        pizzaOrder.setOrderId(o.getString("orderID"));
+        return pizzaOrder;
+        }
+    }
 }
