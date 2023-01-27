@@ -14,25 +14,26 @@ public class Order implements Serializable {
     private String orderId;
 
     //View 0 Fields
-    @NotNull(message="Please select a pizza.")
+    @NotNull(message="You have not selected a pizza.")
     private String pizza;
 
     @NotNull(message="Please select the pizza size.")
     private String size;
 
+    @NotNull(message="Please indicate the quantity to be ordered.")
     @Min(value = 1, message = "Min qty is 1.")
     @Max(value = 10, message = "Max qty is 10.")
     private Integer quantity;
 
     //View 1 Fields
     @NotBlank(message = "Mandatory Field.")
-    @Size(min = 3, message = "Name must be at least 3 characters.")
+    @Size(min = 3, message = "Name must conmtain at least 3 characters.")
     private String name;
 
     @NotBlank(message = "Mandatory Field.")
     private String address;
 
-    @NotBlank(message = "This field is mandatory.")
+    @NotBlank(message = "Mandatory Field.")
     @Size(min = 8, max = 8, message = "Phone number must be 8 digits.")
     private String phone;
 
@@ -124,5 +125,3 @@ public class Order implements Serializable {
     }
     
 }
-    
-
